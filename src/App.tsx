@@ -6,6 +6,7 @@ import { Route, Routes } from 'react-router-dom'
 import Cart from './screens/Cart'
 import Header from './components/header'
 import Footer from './components/footer'
+import Contact from './screens/Contact'
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
       <Routes>
       <Route path='/' element={<Home/>}/>
       <Route path='/cart' element={<Cart/>}/>
+      <Route path='/contact' element={<Contact/>}/>
       </Routes>
       <Footer/>
     </div>

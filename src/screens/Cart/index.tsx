@@ -5,7 +5,7 @@ const Cart=() =>{
   return (
     <div>
   {/* Page Header Start */}
-  <div className="container-fluid bg-secondary mb-5">
+  <div className="container-fluid bg-secondary mb-5 pt-20">
     <div className="d-flex flex-column align-items-center justify-content-center" style={{minHeight: '300px'}}>
       <h1 className="font-weight-semi-bold text-uppercase mb-3">Shopping Cart</h1>
       <div className="d-inline-flex">
