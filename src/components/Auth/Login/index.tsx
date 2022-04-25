@@ -2,45 +2,35 @@ import { unwrapResult } from '@reduxjs/toolkit';
 import { useSnackbar } from 'notistack';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import LoginForm from './components/LoginForm';
 import { login } from '../Slice';
+import { LoginDTO } from '../../../dto/LoginDTO';
+import useLogin from '../Hooks/useLogin';
 
 interface props{
     onCancel:()=>void;
 }
 const Login=(props:any) =>{
     const {onCancel} = props;
-    const dispatch = useDispatch();
     const { enqueueSnackbar } = useSnackbar();
     const navigate = useNavigate();
+    const { mutate: login, isLoading, error,isSuccess,status } = useLogin();
 
-
-    const handleSubmit = async (values:any) => {
-        // try {
-        //     //----
-        //     const action = login(values);
-        //     const resultAction = await dispatch(action);
-        //     const response = unwrapResult(resultAction);
-        //     //
-        //     const user = response.data.data
-        //     if (user.role.roleName === "ADMIN") {
-        //         navigate("/admin/accounts");
-        //     }
-
-        //     //close dialog
-        //     const { closeDialog } = props;
-        //     if (closeDialog) {
-        //         closeDialog();
-        //     }
-        // } catch (error:any) {
-        //     enqueueSnackbar(error.message, { variant: 'error' });
-        // }
-    };
+    const auth = useSelector((state:any) => state.auth.isAuth);
+    // if (auth) {
+    //   navigate("/");
+    // }
+    const handleSubmit =async (data:LoginDTO)=>{
+        await login(data);
+       if(isSuccess || !error ){
+         onCancel();
+       }
+     }
     return (
         <div>
-            <LoginForm onCancel={onCancel} onSubmit={handleSubmit} />
+            <LoginForm onCancel={onCancel} onSubmitt={handleSubmit} />
         </div>
     );
 }

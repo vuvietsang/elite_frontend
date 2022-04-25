@@ -10,17 +10,12 @@ import InputField from '../../../../FormInputs/InputField';
 import PasswordField from '../../../../FormInputs/PasswordField';
 import useLogin from '../../../Hooks/useLogin';
 interface props{
-    onSubmit:(values: any) => Promise<void>;
+    onSubmitt:(values: any) => Promise<void>;
     onCancel:() => void;
 }
 const LoginForm = (props:props)=>{
-    const {onCancel} = props;
-    const auth = useSelector((state:any) => state.auth);
-    console.log(auth);
-    // const navigate = useNavigate();
-    // if (auth) {
-    //   navigate("/");
-    // }
+    const {onCancel,onSubmitt} = props;
+
     const schema = yup.object().shape({
       username: yup.string().required("Vui Lòng Nhập tên tài khoản"),
   
@@ -34,18 +29,11 @@ const LoginForm = (props:props)=>{
       resolver: yupResolver(schema),
     });
     const {isSubmitting} = form.formState;
-    const { handleSubmit, ...formFunc } = form;
-    const onSubmit =async (data:LoginDTO)=>{
-       await login(data);
-      if(isSuccess || !error ){
-        onCancel();
-      }
-    }
-    const { mutate: login, isLoading, error,isSuccess,status } = useLogin();
+    const { handleSubmit } = form;
     return(
         <div>
         {isSubmitting && <LinearProgress />}
-            <form  noValidate onSubmit={form.handleSubmit(onSubmit)} className="flex justify-center items-center w-80 my-8 mx-28 flex-col">
+            <form  noValidate onSubmit={handleSubmit(onSubmitt)} className="flex justify-center items-center w-80 my-8 mx-28 flex-col">
             <p className='flex justify-center p-3 text-3xl'>Login</p>
                 <InputField form={form} label="Username" name='username' />
                 <PasswordField form={form} label="Password" name='password' />
@@ -53,6 +41,7 @@ const LoginForm = (props:props)=>{
               <button type="submit" className="p-2 bg-gray-400 w-36 rounded-sm"  >
                 Login
               </button>
+              
               <button type="submit" className="p-2 bg-red-200 w-36 rounded-sm" onClick={()=>{onCancel()}} >
                 Cancel
               </button>
