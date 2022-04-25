@@ -4,12 +4,10 @@ import { Link } from 'react-router-dom'
 import Login from '../Auth/Login';
 
 const Header=()=> {
-  const [onClose,setOnclose] = useState(true);
-  const [selectedValue,setSelectedValue] = useState("true");
   const [open,setOpen] = useState(false);
 
   const handleClose = () => {
-    setOnclose(true);
+    setOpen(false);
   };
   return (
     <nav className="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0 fixed w-full top-0 overflow-hidden z-50 border-b shadow-sm ">
@@ -38,9 +36,8 @@ const Header=()=> {
       <button className='hover:bg-gray-400 py-1 px-4 rounded-md border-2' onClick={()=>setOpen(true)} >Login</button>
       </div>
     </div>
-    <Dialog  onClose={handleClose} open={open}>
-      <DialogTitle>Login</DialogTitle>
-      <Login/>
+    <Dialog   open={open}>
+      <Login onCancel={handleClose}/>
     </Dialog>
   </nav>
   )

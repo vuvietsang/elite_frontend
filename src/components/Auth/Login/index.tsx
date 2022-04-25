@@ -7,8 +7,11 @@ import { useNavigate } from 'react-router-dom';
 import LoginForm from '../LoginForm';
 import { login } from '../Slice';
 
+interface props{
+    onCancel:()=>void;
+}
 const Login=(props:any) =>{
-
+    const {onCancel} = props;
     const dispatch = useDispatch();
     const { enqueueSnackbar } = useSnackbar();
     const navigate = useNavigate();
@@ -37,7 +40,7 @@ const Login=(props:any) =>{
     };
     return (
         <div>
-            <LoginForm onSubmit={handleSubmit} />
+            <LoginForm onCancel={onCancel} onSubmit={handleSubmit} />
         </div>
     );
 }

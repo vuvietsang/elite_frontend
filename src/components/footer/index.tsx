@@ -52,9 +52,6 @@ const Footer=()=>{
           <a className="text-dark font-weight-semi-bold" href="#"> Sang vu</a>
         </p>
       </div>
-      <div className="col-md-6 px-xl-0 text-center text-md-right">
-        <img className="img-fluid" src="img/payments.png" alt="" />
-      </div>
     </div>
   </div>
   )
