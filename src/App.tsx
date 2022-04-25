@@ -9,6 +9,7 @@ import Footer from './components/footer'
 import Contact from './screens/Contact'
 import Checkout from './screens/Checkout'
 import ProductDetails from './screens/ProductDetails'
+import Products from './screens/Products'
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
       <Route path='/contact' element={<Contact/>}/>
       <Route path='/checkout' element={<Checkout/>}/>
       <Route path='/details' element={<ProductDetails/>}/>
+      <Route path='/products' element={<Products/>}/>
       </Routes>
       <Footer/>
     </div>
