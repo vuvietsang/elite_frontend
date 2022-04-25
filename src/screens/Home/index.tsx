@@ -1,8 +1,8 @@
 import React from 'react'
-import Carousel from '../../components/carousel';
-import Categories from '../../components/categories';
-import Footer from '../../components/footer';
-import Header from '../../components/header';
+import Carousel from '../../components/Carousel';
+import Categories from '../../components/Categories';
+import Footer from '../../components/Footer';
+import Header from '../../components/Header';
 
 const Home=()=>{
   return (
