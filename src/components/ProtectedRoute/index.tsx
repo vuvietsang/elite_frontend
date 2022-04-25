@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import { Route } from 'react-router-dom';
 
 
@@ -6,7 +6,8 @@ interface props{
     component:Component;
 }
 const ProtectedRoute=({component, ...rest}:props) =>{
-  return (<Route {...rest} />
+    const [isAuth,setIsAuth] = useState(false);
+  return (<Route {...rest}  />
   )
 }
 

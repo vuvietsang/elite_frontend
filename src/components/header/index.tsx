@@ -1,7 +1,16 @@
-import React from 'react'
+import { Dialog, DialogTitle, List } from '@mui/material'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import Login from '../Auth/Login';
 
 const Header=()=> {
+  const [onClose,setOnclose] = useState(true);
+  const [selectedValue,setSelectedValue] = useState("true");
+  const [open,setOpen] = useState(false);
+
+  const handleClose = () => {
+    setOnclose(true);
+  };
   return (
     <nav className="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0 fixed w-full top-0 overflow-hidden z-50 border-b shadow-sm ">
     <a  className="text-decoration-none d-block d-lg-none">
@@ -26,9 +35,13 @@ const Header=()=> {
           5
        </span>
         </Link>
-      <button className='hover:bg-gray-400 py-1 px-4 rounded-md border-2' >Login</button>
+      <button className='hover:bg-gray-400 py-1 px-4 rounded-md border-2' onClick={()=>setOpen(true)} >Login</button>
       </div>
     </div>
+    <Dialog  onClose={handleClose} open={open}>
+      <DialogTitle>Login</DialogTitle>
+      <Login/>
+    </Dialog>
   </nav>
   )
 }
