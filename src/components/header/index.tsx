@@ -61,10 +61,10 @@ const Header = () => {
             </span>
           </Link>
           {avatar&&isAuth ? (
-            <div className="flex flex-row space-x-2 mr-5">
+            <div className="flex flex-row space-x-2 px-10">
             <img src={avatar} className="rounded-full object-cover h-10 w-10" />
             <button
-              className="hover:bg-gray-400 py-1 px-4 rounded-md border-2"
+              className="hover:bg-gray-400 py-1 px-3 rounded-md border-2"
               onClick={() => {
                 dispatch(logout());
                 nav("/");
