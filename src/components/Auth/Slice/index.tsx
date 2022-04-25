@@ -5,6 +5,7 @@ export interface AuthState {
   token: string;
   userId: string;
   role: string;
+  avatar:string;
 }
 
 const initialState: AuthState = {
@@ -12,6 +13,7 @@ const initialState: AuthState = {
   token: "",
   userId: "",
   role: "",
+  avatar:"",
 };
 
 export const AuthSlice = createSlice({
@@ -19,10 +21,12 @@ export const AuthSlice = createSlice({
   initialState,
   reducers: {
     login: (state, action) => {
+      console.log(action.payload)
       state.isAuth = true;
-      state.token = action.payload.jwt;
+      state.token = action.payload.token;
       state.userId = action.payload.userId;
-      state.role = action.payload.role;
+      state.role = action.payload.roleName;
+      state.avatar = action.payload.avatar;
     },
     logout: (state) => {
       state.isAuth = false;

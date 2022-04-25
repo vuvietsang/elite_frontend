@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import LoginForm from '../LoginForm';
+import LoginForm from './components/LoginForm';
 import { login } from '../Slice';
 
 interface props{

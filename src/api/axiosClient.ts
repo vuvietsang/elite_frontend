@@ -1,26 +1,23 @@
 import axios from "axios";
-
-const jwtToken = localStorage.getItem("token") || "";
-
-const axiosClient = axios.create({
+// import Cookies from "js-cookie";
+// axios.defaults.baseURL = import.meta.env.BE_URL;
+import { store } from "../app/store/index";
+const API = axios.create({
   baseURL: "http://localhost:8080/",
+  // withCredentials: true,
 });
-//Interceptors --muốn làm 1 cái gì cho tất cả req hoặc response
-// Add a request interceptor
-axiosClient.interceptors.request.use(
+API.interceptors.request.use(
   (config) => {
     if (!config.headers?.Authorization) {
-      if (jwtToken) {
-          if(config.headers){
-            config.headers.Authorization = jwtToken;
-          }
+      const token = store.getState().auth.token;
+      if (token) {
+        if(config.headers)
+        config.headers.Authorization = `${token}`;
       }
     }
+
     return config;
   },
-  function (error) {
-    // Do something with request error
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
-export { axiosClient };
+export { API };
