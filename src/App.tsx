@@ -8,6 +8,7 @@ import Header from './components/header'
 import Footer from './components/footer'
 import Contact from './screens/Contact'
 import Checkout from './screens/Checkout'
+import ProductDetails from './screens/ProductDetails'
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
       <Route path='/cart' element={<Cart/>}/>
       <Route path='/contact' element={<Contact/>}/>
       <Route path='/checkout' element={<Checkout/>}/>
+      <Route path='/details' element={<ProductDetails/>}/>
       </Routes>
       <Footer/>
     </div>
