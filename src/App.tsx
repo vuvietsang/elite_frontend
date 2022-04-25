@@ -7,6 +7,7 @@ import Cart from './screens/Cart'
 import Header from './components/header'
 import Footer from './components/footer'
 import Contact from './screens/Contact'
+import Checkout from './screens/Checkout'
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
       <Route path='/' element={<Home/>}/>
       <Route path='/cart' element={<Cart/>}/>
       <Route path='/contact' element={<Contact/>}/>
+      <Route path='/checkout' element={<Checkout/>}/>
       </Routes>
       <Footer/>
     </div>
