@@ -1,3 +1,5 @@
+import { AxiosResponse } from "axios";
+
 export interface ProductDto{
     id:number;
     name:string;
@@ -11,3 +13,6 @@ export interface ProductDto{
     categoryName:string;
 }
 
+export interface GetAllProductDtoResponse{
+    data:{content:ProductDto[],totalPage:number}
+}
