@@ -9,6 +9,7 @@ import { login } from "../Slice";
 import useLogin from "../Hooks/useLogin";
 import RegisterForm from "./components/RegisterForm";
 import { RegisterDto } from "../../../dto/RegisterDto";
+import useRegister from "../Hooks/useRegister";
 
 interface props {
   handleCloseRegister: () => void;
@@ -17,13 +18,13 @@ interface props {
 const Register = (props: props) => {
   const { handleCloseRegister,onOpenLogin } = props;
   const {
-    mutate: login,
+    mutate: register,
     isSuccess,
     isError,
-  } = useLogin();
+  } = useRegister();
   const auth = useSelector((state: any) => state.auth.isAuth);
   const handleSubmit = async (data: RegisterDto) => {
-    await login(data);
+    await register(data);
   };
   if (isSuccess || !isError == false) {
     handleCloseRegister();

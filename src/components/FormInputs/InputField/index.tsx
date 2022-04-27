@@ -11,9 +11,10 @@ interface props{
     label: string;
     disabled?: boolean;
     placeholder?:string;
+    hidden?:boolean;
 }
 function InputField(props:props) {
-    const { form, name, label, disabled, placeholder } = props;
+    const { form, name, label, disabled, placeholder,hidden } = props;
     const { formState } = form;
     const hasError = formState.errors[name] && formState.touchedFields[name];
     return (
@@ -22,6 +23,7 @@ function InputField(props:props) {
             control={form.control}
             render={({ field }) =>
                 <TextField
+                    hidden={hidden}
                     {...field}
                     placeholder={placeholder}
                     label={label}

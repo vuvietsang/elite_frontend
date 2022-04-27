@@ -15,8 +15,8 @@ interface props {
 const LoginForm = (props: props) => {
   const { onCancel, onSubmitt,onOpenRegister } = props;
   const schema = yup.object().shape({
-    username: yup.string().required("Vui Lòng Nhập tên tài khoản"),
-    password: yup.string().required("Mật Khẩu Không Được Bỏ Trống"),
+    username: yup.string().required("Please enter username"),
+    password: yup.string().required("Password can not be empty"),
   });
   const form = useForm<LoginDto>({
     defaultValues: {
