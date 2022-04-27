@@ -1,4 +1,4 @@
-export interface ErrorHttpResponse {
+export interface ErrorHttpResponseDto{
     message: string;
     code: number;
     data: Object;

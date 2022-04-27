@@ -3,15 +3,28 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link,useNavigate} from "react-router-dom";
 import Login from "../Auth/Login";
+import Register from "../Auth/Register";
 import { logout } from "../Auth/Slice";
 
 const Header = () => {
-  const [open, setOpen] = useState(false);
+  const [openLogin, setOpenLogin] = useState(false);
+  const [openRegister, setOpenRegister] = useState(false);
   const dispatch = useDispatch();
   const nav = useNavigate();
   const handleClose = () => {
-    setOpen(false);
+    setOpenLogin(false);
   };
+  const handleCloseRegister = () => {
+    setOpenRegister(false);
+  };
+  const onOpenRegister=()=>{
+    setOpenRegister(true);
+    setOpenLogin(false);
+  }
+  const onOpenLogin=()=>{
+    setOpenRegister(false);
+    setOpenLogin(true);
+  }
   const avatar = useSelector((state: any) => state.auth.avatar);
   const isAuth = useSelector((state: any) => state.auth.isAuth);
 
@@ -76,16 +89,20 @@ const Header = () => {
           ) : (
             <button
               className="hover:bg-gray-400 py-1 px-4 rounded-md border-2"
-              onClick={() => setOpen(true)}
+              onClick={() => setOpenLogin(true)}
             >
               Login
             </button>
           )}
         </div>
       </div>
-      <Dialog open={open}>
-        <Login onCancel={handleClose} />
+      <Dialog open={openLogin}>
+        <Login onOpenRegister={onOpenRegister} onCancel={handleClose} />
       </Dialog>
+      <Dialog open={openRegister}>
+        <Register onOpenLogin={onOpenLogin} handleCloseRegister={handleCloseRegister} />
+      </Dialog>
+        
     </nav>
   );
 };

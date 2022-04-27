@@ -19,7 +19,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
       <Provider store={store}>
         <PersistGate persistor={persistor}>
-          <SnackbarProvider>
+          <SnackbarProvider maxSnack={1}>
             <QueryClientProvider client={queryClient}>
               <App />
             </QueryClientProvider>

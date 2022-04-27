@@ -1,4 +1,4 @@
-export interface OrderDTO{
+export interface OrderDetailsDto{
     productId:number;
     quantity:number;
 }

@@ -1,4 +1,4 @@
-export interface OrderDTO{
+export interface OrderDto{
     id:number;
     status:boolean;
     isConfirmed:boolean;

@@ -2,7 +2,8 @@ import React from 'react'
 
 const Footer=()=>{
   return (
-    <div className="container-fluid bg-secondary text-dark mt-5 pt-5 bottom-0 ">
+    <div className="container-fluid bg-secondary text-dark mt-5 pt-5 bottom-0">
+      <div className=''>
     <div className="row px-xl-5 pt-5  ">
       <div className="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
         <a  className="text-decoration-none">
@@ -52,6 +53,7 @@ const Footer=()=>{
           <a className="text-dark font-weight-semi-bold" href="#"> Sang vu</a>
         </p>
       </div>
+    </div>
     </div>
   </div>
   )

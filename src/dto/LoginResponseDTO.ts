@@ -1,4 +1,4 @@
-export interface LoginResponseDTO{
+export interface LoginResponseDto{
     userId:number;
     fullName:string;
     username:string;
@@ -9,6 +9,6 @@ export interface LoginResponseDTO{
     avatar:string;
 }
 
-export interface SuccessLoginResponseDTO{
-    data:LoginResponseDTO;
+export interface SuccessLoginResponseDto{
+    data:LoginResponseDto;
 }
