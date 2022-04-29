@@ -1,12 +1,19 @@
-import { Box, CircularProgress } from "@mui/material";
-import React, { useState } from "react";
+import { Box, Button, CircularProgress } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ProductDto } from "../../dto/ProductDTO";
+import { ProductDto } from "../../dto/ProductDto";
 import useProducts from "./hooks/useProducts";
 
 function Products() {
-  const [pageNum, setPageNum] = useState(0);
-  const { data, isLoading } = useProducts(pageNum, 9, "");
+  const [pageNumber, setPageNumber] = useState(0);
+  const [search,setSearch] = useState<string>("");
+  const { data, isLoading} = useProducts(pageNumber, 9, search);
+  const paginationArray:number[] = [];
+  if(data?.totalPages)
+    for (let index = 0; index < data.totalPages; index++) {
+       paginationArray.push(index);
+    }
+  const maxPage = paginationArray.length-1;
   // if (!data)
   //   return (
   //     <Box sx={{ display: "flex" }}>
@@ -315,7 +322,7 @@ function Products() {
                   <div className="card product-item border-0 mb-4">
                     <div className="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
                       <img
-                        className="img-fluid w-full h-96"
+                        className="img-fluid w-full h-80"
                         src={product.image}
                         alt=""
                       />
@@ -345,32 +352,20 @@ function Products() {
               <div className="col-12 pb-1">
                 <nav aria-label="Page navigation">
                   <ul className="pagination justify-content-center mb-3">
-                    <li className="page-item disabled">
-                      <a className="page-link" href="#" aria-label="Previous">
+                    <li className={`page-item ${pageNumber==0 && "disabled"}`}>
+                      <button className="page-link" onClick={()=>setPageNumber(pageNumber-1)} aria-label="Previous">
                         <span aria-hidden="true">«</span>
                         <span className="sr-only">Previous</span>
-                      </a>
+                      </button>
                     </li>
-                    <li className="page-item active">
-                      <a className="page-link" href="#">
-                        1
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      <a className="page-link" href="#">
-                        2
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      <a className="page-link" href="#">
-                        3
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      <a className="page-link" href="#" aria-label="Next">
+                    {paginationArray.map(index=>(
+                    <li className={`page-item ${index==pageNumber && "active"}`} ><button className="page-link" onClick={()=>{setPageNumber(index)}}>{index}</button></li>
+                    ))}
+                    <li className={`page-item  ${pageNumber == maxPage && "disabled"}`}>
+                      <button className={`page-link`} onClick={()=>setPageNumber(pageNumber+1)} aria-label="Next">
                         <span aria-hidden="true">»</span>
                         <span className="sr-only">Next</span>
-                      </a>
+                      </button>
                     </li>
                   </ul>
                 </nav>

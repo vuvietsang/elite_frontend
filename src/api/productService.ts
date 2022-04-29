@@ -1,4 +1,4 @@
-import { GetAllProductDtoResponse } from "../dto/ProductDTO";
+import { GetAllProductDtoResponse } from "../dto/ProductDto";
 import { API } from "./axiosClient";
 
  export const  getAllProduct=async(pageNumber:number,pageSize:number,search:string)=>{
