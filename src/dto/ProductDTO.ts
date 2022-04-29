@@ -16,3 +16,6 @@ export interface ProductDto{
 export interface GetAllProductDtoResponse{
     data:{content:ProductDto[],totalPages:number}
 }
+export interface GetProductDtoByIdResponse{
+    data:ProductDto
+}

@@ -3,17 +3,19 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ProductDto } from "../../dto/ProductDto";
 import useProducts from "./hooks/useProducts";
+import { useNavigate } from "react-router";
 
 function Products() {
   const [pageNumber, setPageNumber] = useState(0);
-  const [search,setSearch] = useState<string>("");
-  const { data, isLoading} = useProducts(pageNumber, 9, search);
-  const paginationArray:number[] = [];
-  if(data?.totalPages)
+  const [search, setSearch] = useState<string>("");
+  const { data, isLoading } = useProducts(pageNumber, 9, search);
+  const paginationArray: number[] = [];
+  const navigate = useNavigate();
+  if (data?.totalPages)
     for (let index = 0; index < data.totalPages; index++) {
-       paginationArray.push(index);
+      paginationArray.push(index);
     }
-  const maxPage = paginationArray.length-1;
+  const maxPage = paginationArray.length - 1;
   // if (!data)
   //   return (
   //     <Box sx={{ display: "flex" }}>
@@ -23,11 +25,11 @@ function Products() {
   return (
     <div>
       {/* Page Header Start */}
-      <div className="container-fluid bg-secondary mb-5 mt-16">
+      <div className="bg-secondary">
         <div
-          className="d-flex flex-column align-items-center justify-content-center"
-          style={{ minHeight: "300px" }}
+          className="d-flex flex-column align-items-center justify-content-center h-72"
         >
+          <div className="mt-16"></div>
           <h1 className="font-weight-semi-bold text-uppercase mb-3">
             Our Products
           </h1>
@@ -42,7 +44,7 @@ function Products() {
       </div>
       {/* Page Header End */}
       {/* Shop Start */}
-      <div className="container-fluid pt-5 mt-20">
+      <div className="container-fluid pt-5 ">
         <div className="row px-xl-5">
           {/* Shop Sidebar Start */}
           <div className="col-lg-3 col-md-12">
@@ -60,7 +62,6 @@ function Products() {
                   <label className="custom-control-label" htmlFor="price-all">
                     All Price
                   </label>
-                  <span className="badge border font-weight-normal">1000</span>
                 </div>
                 <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                   <input
@@ -71,7 +72,6 @@ function Products() {
                   <label className="custom-control-label" htmlFor="price-1">
                     $0 - $100
                   </label>
-                  <span className="badge border font-weight-normal">150</span>
                 </div>
                 <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                   <input
@@ -82,7 +82,6 @@ function Products() {
                   <label className="custom-control-label" htmlFor="price-2">
                     $100 - $200
                   </label>
-                  <span className="badge border font-weight-normal">295</span>
                 </div>
                 <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                   <input
@@ -93,7 +92,6 @@ function Products() {
                   <label className="custom-control-label" htmlFor="price-3">
                     $200 - $300
                   </label>
-                  <span className="badge border font-weight-normal">246</span>
                 </div>
                 <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                   <input
@@ -104,7 +102,6 @@ function Products() {
                   <label className="custom-control-label" htmlFor="price-4">
                     $300 - $400
                   </label>
-                  <span className="badge border font-weight-normal">145</span>
                 </div>
                 <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between">
                   <input
@@ -115,7 +112,6 @@ function Products() {
                   <label className="custom-control-label" htmlFor="price-5">
                     $400 - $500
                   </label>
-                  <span className="badge border font-weight-normal">168</span>
                 </div>
               </form>
             </div>
@@ -134,7 +130,6 @@ function Products() {
                   <label className="custom-control-label" htmlFor="price-all">
                     All Color
                   </label>
-                  <span className="badge border font-weight-normal">1000</span>
                 </div>
                 <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                   <input
@@ -145,7 +140,6 @@ function Products() {
                   <label className="custom-control-label" htmlFor="color-1">
                     Black
                   </label>
-                  <span className="badge border font-weight-normal">150</span>
                 </div>
                 <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                   <input
@@ -156,7 +150,6 @@ function Products() {
                   <label className="custom-control-label" htmlFor="color-2">
                     White
                   </label>
-                  <span className="badge border font-weight-normal">295</span>
                 </div>
                 <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                   <input
@@ -167,7 +160,6 @@ function Products() {
                   <label className="custom-control-label" htmlFor="color-3">
                     Red
                   </label>
-                  <span className="badge border font-weight-normal">246</span>
                 </div>
                 <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                   <input
@@ -178,7 +170,6 @@ function Products() {
                   <label className="custom-control-label" htmlFor="color-4">
                     Blue
                   </label>
-                  <span className="badge border font-weight-normal">145</span>
                 </div>
                 <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between">
                   <input
@@ -189,7 +180,6 @@ function Products() {
                   <label className="custom-control-label" htmlFor="color-5">
                     Green
                   </label>
-                  <span className="badge border font-weight-normal">168</span>
                 </div>
               </form>
             </div>
@@ -208,7 +198,6 @@ function Products() {
                   <label className="custom-control-label" htmlFor="size-all">
                     All Size
                   </label>
-                  <span className="badge border font-weight-normal">1000</span>
                 </div>
                 <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                   <input
@@ -219,7 +208,6 @@ function Products() {
                   <label className="custom-control-label" htmlFor="size-1">
                     XS
                   </label>
-                  <span className="badge border font-weight-normal">150</span>
                 </div>
                 <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                   <input
@@ -230,7 +218,6 @@ function Products() {
                   <label className="custom-control-label" htmlFor="size-2">
                     S
                   </label>
-                  <span className="badge border font-weight-normal">295</span>
                 </div>
                 <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                   <input
@@ -241,7 +228,6 @@ function Products() {
                   <label className="custom-control-label" htmlFor="size-3">
                     M
                   </label>
-                  <span className="badge border font-weight-normal">246</span>
                 </div>
                 <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                   <input
@@ -252,7 +238,6 @@ function Products() {
                   <label className="custom-control-label" htmlFor="size-4">
                     L
                   </label>
-                  <span className="badge border font-weight-normal">145</span>
                 </div>
                 <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between">
                   <input
@@ -263,7 +248,6 @@ function Products() {
                   <label className="custom-control-label" htmlFor="size-5">
                     XL
                   </label>
-                  <span className="badge border font-weight-normal">168</span>
                 </div>
               </form>
             </div>
@@ -281,6 +265,9 @@ function Products() {
                         type="text"
                         className="form-control"
                         placeholder="Search by name"
+                        onChange={(e) => {
+                          setSearch("name:" + e.target.value);
+                        }}
                       />
                       <div className="input-group-append">
                         <span className="input-group-text bg-transparent text-primary">
@@ -317,11 +304,17 @@ function Products() {
                   </div>
                 </div>
               </div>
-              {data?.content?.map((product:ProductDto) => (
-                <div className="col-lg-4 col-md-6 col-sm-12 pb-1">
+              {data?.content?.map((product: ProductDto) => (
+                <div
+                  key={product.id}
+                  className="col-lg-4 col-md-6 col-sm-12 pb-1"
+                >
                   <div className="card product-item border-0 mb-4">
                     <div className="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
                       <img
+                        onClick={() => {
+                          navigate(`/details/${product.id}`);
+                        }}
                         className="img-fluid w-full h-80"
                         src={product.image}
                         alt=""
@@ -337,10 +330,15 @@ function Products() {
                       </div>
                     </div>
                     <div className="card-footer d-flex justify-content-between bg-light border">
-                      <a className="btn btn-sm text-dark p-0">
+                      <button
+                        onClick={() => {
+                          navigate(`/details/${product.id}`);
+                        }}
+                        className="btn btn-sm text-dark p-0"
+                      >
                         <i className="fas fa-eye text-primary mr-1" />
                         View Detail
-                      </a>
+                      </button>
                       <a className="btn btn-sm text-dark p-0">
                         <i className="fas fa-shopping-cart text-primary mr-1" />
                         Add To Cart
@@ -352,17 +350,44 @@ function Products() {
               <div className="col-12 pb-1">
                 <nav aria-label="Page navigation">
                   <ul className="pagination justify-content-center mb-3">
-                    <li className={`page-item ${pageNumber==0 && "disabled"}`}>
-                      <button className="page-link" onClick={()=>setPageNumber(pageNumber-1)} aria-label="Previous">
+                    <li
+                      className={`page-item ${pageNumber == 0 && "disabled"}`}
+                    >
+                      <button
+                        className="page-link"
+                        onClick={() => setPageNumber(pageNumber - 1)}
+                        aria-label="Previous"
+                      >
                         <span aria-hidden="true">«</span>
                         <span className="sr-only">Previous</span>
                       </button>
                     </li>
-                    {paginationArray.map(index=>(
-                    <li className={`page-item ${index==pageNumber && "active"}`} ><button className="page-link" onClick={()=>{setPageNumber(index)}}>{index}</button></li>
+                    {paginationArray.map((index) => (
+                      <li key={index}
+                        className={`page-item ${
+                          index == pageNumber && "active"
+                        }`}
+                      >
+                        <button
+                          className="page-link"
+                          onClick={() => {
+                            setPageNumber(index);
+                          }}
+                        >
+                          {index}
+                        </button>
+                      </li>
                     ))}
-                    <li className={`page-item  ${pageNumber == maxPage && "disabled"}`}>
-                      <button className={`page-link`} onClick={()=>setPageNumber(pageNumber+1)} aria-label="Next">
+                    <li
+                      className={`page-item  ${
+                        pageNumber == maxPage && "disabled"
+                      }`}
+                    >
+                      <button
+                        className={`page-link`}
+                        onClick={() => setPageNumber(pageNumber + 1)}
+                        aria-label="Next"
+                      >
                         <span aria-hidden="true">»</span>
                         <span className="sr-only">Next</span>
                       </button>
