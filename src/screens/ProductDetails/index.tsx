@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { array, number } from "yup";
 import useProductById from "./hooks/useProductById";
+import useRatingProductById from "./hooks/useRatingsProductById";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const { data } = useProductById(id);
+  const { data: ratings } = useRatingProductById(id, 0, 10);
+  const [quantity, setQuantity] = useState<number>(1);
   return (
     <div>
       <div className="container-fluid bg-secondary mb-2 ">
@@ -42,7 +46,7 @@ const ProductDetails = () => {
               <small className="pt-1">(50 Reviews)</small>
             </div>
             <h3 className="font-weight-semi-bold mb-4">${data?.price} </h3>
-            <p className="mb-2">Description</p>
+            <p className="mb-2 text-xl font-serif">Description</p>
             <p className="mb-20">{data?.description}</p>
             <div className="flex justify-center mb-4">
               <p className="text-dark font-weight-medium mb-0 mr-3">Sizes:</p>
@@ -53,6 +57,7 @@ const ProductDetails = () => {
                     className="custom-control-input"
                     id="size-1"
                     name="size"
+                    defaultChecked
                   />
                   <label className="custom-control-label" htmlFor="size-1">
                     XS
@@ -113,6 +118,7 @@ const ProductDetails = () => {
                     className="custom-control-input"
                     id="color-1"
                     name="color"
+                    defaultChecked
                   />
                   <label className="custom-control-label" htmlFor="color-1">
                     Black
@@ -170,17 +176,28 @@ const ProductDetails = () => {
                 style={{ width: "130px" }}
               >
                 <div className="input-group-btn">
-                  <button className="btn btn-primary btn-minus">
+                  <button
+                    className="btn btn-primary btn-minus"
+                    onClick={() => {
+                      if (quantity > 1) setQuantity(quantity - 1);
+                    }}
+                  >
                     <i className="fa fa-minus" />
                   </button>
                 </div>
                 <input
                   type="text"
                   className="form-control bg-secondary text-center"
-                  defaultValue={1}
+                  readOnly
+                  value={quantity}
                 />
                 <div className="input-group-btn">
-                  <button className="btn btn-primary btn-plus">
+                  <button
+                    className="btn btn-primary btn-plus"
+                    onClick={() => {
+                      setQuantity(quantity + 1);
+                    }}
+                  >
                     <i className="fa fa-plus" />
                   </button>
                 </div>
@@ -199,7 +216,7 @@ const ProductDetails = () => {
                 data-toggle="tab"
                 href="#tab-pane-3"
               >
-                Reviews (0)
+                Reviews ({ratings?.totalElements})
               </a>
             </div>
             <div className="tab-content">
@@ -207,31 +224,25 @@ const ProductDetails = () => {
                 <div className="row flex justify-center">
                   <div className="col-md-8">
                     <h4 className="mb-4 text-lg font-bold">
-                      1 review for "Colorful Stylish Shirt"
+                      {ratings?.totalElements ? ratings?.totalElements : 0}{" "}
+                      review for "{data?.name}"
                     </h4>
-                    <div className="media mb-4">
-                      <div className="media-body">
-                        <h6>
-                          John Doe
-                          <small>
-                            {" "}
-                            - <i>01 Jan 2045</i>
-                          </small>
-                        </h6>
-                        <div className="text-primary mb-2">
-                          <i className="fas fa-star" />
-                          <i className="fas fa-star" />
-                          <i className="fas fa-star" />
-                          <i className="fas fa-star-half-alt" />
-                          <i className="far fa-star" />
+                    {ratings?.content.map((rating) => (
+                      <div key={rating.comment} className="media mb-4">
+                        <div className="media-body">
+                          <h6>
+                            {rating.userName}
+                            <small> {rating.ratingDate}</small>
+                          </h6>
+                          <div className="text-primary mb-2">
+                            {[...Array(rating.ratingStar)].map((i) => (
+                              <i key={i} className="fas fa-star" />
+                            ))}
+                          </div>
+                          <p>{rating.comment}</p>
                         </div>
-                        <p>
-                          Diam amet duo labore stet elitr ea clita ipsum, tempor
-                          labore accusam ipsum et no at. Kasd diam tempor rebum
-                          magna dolores sed sed eirmod ipsum.
-                        </p>
                       </div>
-                    </div>
+                    ))}
                   </div>
                   <div className="col-md-8">
                     <h4 className="mb-10 mt-5 text-lg font-bold ">
