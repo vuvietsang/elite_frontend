@@ -4,11 +4,13 @@ import { Link } from "react-router-dom";
 import { ProductDto } from "../../dto/ProductDto";
 import useProducts from "./hooks/useProducts";
 import { useNavigate } from "react-router";
+import { useForm } from "react-hook-form";
 
 function Products() {
   const [pageNumber, setPageNumber] = useState(0);
   const [search, setSearch] = useState<string>("");
-  const { data, isLoading } = useProducts(pageNumber, 9, search);
+  const [sortBy, setSortBy] = useState<string>("Sort By");
+  const { data, isLoading } = useProducts(pageNumber, 9, search, sortBy);
   const paginationArray: number[] = [];
   const navigate = useNavigate();
   if (data?.totalPages)
@@ -16,19 +18,26 @@ function Products() {
       paginationArray.push(index);
     }
   const maxPage = paginationArray.length - 1;
-  // if (!data)
-  //   return (
-  //     <Box sx={{ display: "flex" }}>
-  //       <CircularProgress />
-  //     </Box>
-  //   );
+  const { handleSubmit, register } = useForm();
+  const handleSearchByPrice = (value: { price: Array<string> } | any) => {
+    if (value.price == "all") setSearch("");
+    else if (value.price == "greaterThan400") {
+      setSearch("price>400");
+    } else {
+      const price = value.price;
+      const leftPrice: string = price.split("-")[0];
+      const rightPrice: string = price.split("-")[1];
+      console.log(leftPrice);
+      console.log(rightPrice);
+      setSearch(`price>${leftPrice},price<${rightPrice}`);
+    }
+  };
+
   return (
     <div>
       {/* Page Header Start */}
       <div className="bg-secondary">
-        <div
-          className="d-flex flex-column align-items-center justify-content-center h-72"
-        >
+        <div className="d-flex flex-column align-items-center justify-content-center h-72">
           <div className="mt-16"></div>
           <h1 className="font-weight-semi-bold text-uppercase mb-3">
             Our Products
@@ -51,210 +60,99 @@ function Products() {
             {/* Price Start */}
             <div className="border-bottom mb-4 pb-4">
               <h5 className="font-weight-semi-bold mb-4">Filter by price</h5>
-              <form>
-                <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                  <input
-                    type="checkbox"
-                    className="custom-control-input"
-                    defaultChecked
-                    id="price-all"
-                  />
-                  <label className="custom-control-label" htmlFor="price-all">
-                    All Price
-                  </label>
+              <form
+                onSubmit={handleSubmit((value) => {
+                  handleSearchByPrice(value);
+                })}
+                className="flex justify-around flex-row"
+              >
+                <div>
+                  <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                    <input
+                      type="radio"
+                      className="custom-control-input"
+                      defaultChecked
+                      id="price-all"
+                      value="all"
+                      {...register("price")}
+                    />
+                    <label className="custom-control-label" htmlFor="price-all">
+                      All Price
+                    </label>
+                  </div>
+                  <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                    <input
+                      type="radio"
+                      className="custom-control-input"
+                      id="price-1"
+                      value="0-100"
+                      {...register("price")}
+                    />
+                    <label className="custom-control-label" htmlFor="price-1">
+                      $0 - $100
+                    </label>
+                  </div>
+                  <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                    <input
+                      type="radio"
+                      className="custom-control-input"
+                      id="price-2"
+                      value="100-200"
+                      {...register("price")}
+                    />
+                    <label className="custom-control-label" htmlFor="price-2">
+                      $100 - $200
+                    </label>
+                  </div>
+                  <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                    <input
+                      type="radio"
+                      className="custom-control-input"
+                      id="price-3"
+                      value="200-300"
+                      {...register("price")}
+                    />
+                    <label className="custom-control-label" htmlFor="price-3">
+                      $200 - $300
+                    </label>
+                  </div>
+                  <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                    <input
+                      type="radio"
+                      className="custom-control-input"
+                      id="price-4"
+                      value="300-400"
+                      {...register("price")}
+                    />
+                    <label className="custom-control-label" htmlFor="price-4">
+                      $300 - $400
+                    </label>
+                  </div>
+                  <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between">
+                    <input
+                      type="radio"
+                      className="custom-control-input"
+                      id="price-5"
+                      {...register("price")}
+                      value="greaterThan400"
+                    />
+                    <label className="custom-control-label" htmlFor="price-5">
+                      Greater than $400
+                    </label>
+                  </div>
                 </div>
-                <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                  <input
-                    type="checkbox"
-                    className="custom-control-input"
-                    id="price-1"
-                  />
-                  <label className="custom-control-label" htmlFor="price-1">
-                    $0 - $100
-                  </label>
-                </div>
-                <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                  <input
-                    type="checkbox"
-                    className="custom-control-input"
-                    id="price-2"
-                  />
-                  <label className="custom-control-label" htmlFor="price-2">
-                    $100 - $200
-                  </label>
-                </div>
-                <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                  <input
-                    type="checkbox"
-                    className="custom-control-input"
-                    id="price-3"
-                  />
-                  <label className="custom-control-label" htmlFor="price-3">
-                    $200 - $300
-                  </label>
-                </div>
-                <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                  <input
-                    type="checkbox"
-                    className="custom-control-input"
-                    id="price-4"
-                  />
-                  <label className="custom-control-label" htmlFor="price-4">
-                    $300 - $400
-                  </label>
-                </div>
-                <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                  <input
-                    type="checkbox"
-                    className="custom-control-input"
-                    id="price-5"
-                  />
-                  <label className="custom-control-label" htmlFor="price-5">
-                    $400 - $500
-                  </label>
-                </div>
-              </form>
-            </div>
-            {/* Price End */}
-            {/* Color Start */}
-            <div className="border-bottom mb-4 pb-4">
-              <h5 className="font-weight-semi-bold mb-4">Filter by color</h5>
-              <form>
-                <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                  <input
-                    type="checkbox"
-                    className="custom-control-input"
-                    defaultChecked
-                    id="color-all"
-                  />
-                  <label className="custom-control-label" htmlFor="price-all">
-                    All Color
-                  </label>
-                </div>
-                <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                  <input
-                    type="checkbox"
-                    className="custom-control-input"
-                    id="color-1"
-                  />
-                  <label className="custom-control-label" htmlFor="color-1">
-                    Black
-                  </label>
-                </div>
-                <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                  <input
-                    type="checkbox"
-                    className="custom-control-input"
-                    id="color-2"
-                  />
-                  <label className="custom-control-label" htmlFor="color-2">
-                    White
-                  </label>
-                </div>
-                <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                  <input
-                    type="checkbox"
-                    className="custom-control-input"
-                    id="color-3"
-                  />
-                  <label className="custom-control-label" htmlFor="color-3">
-                    Red
-                  </label>
-                </div>
-                <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                  <input
-                    type="checkbox"
-                    className="custom-control-input"
-                    id="color-4"
-                  />
-                  <label className="custom-control-label" htmlFor="color-4">
-                    Blue
-                  </label>
-                </div>
-                <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                  <input
-                    type="checkbox"
-                    className="custom-control-input"
-                    id="color-5"
-                  />
-                  <label className="custom-control-label" htmlFor="color-5">
-                    Green
-                  </label>
+                <div>
+                  <button type="submit">
+                    <div className="input-group-append">
+                      <span className="input-group-text bg-transparent text-primary">
+                        <i className="fa fa-search" />
+                      </span>
+                    </div>
+                  </button>
                 </div>
               </form>
             </div>
-            {/* Color End */}
-            {/* Size Start */}
-            <div className="mb-5">
-              <h5 className="font-weight-semi-bold mb-4">Filter by size</h5>
-              <form>
-                <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                  <input
-                    type="checkbox"
-                    className="custom-control-input"
-                    defaultChecked
-                    id="size-all"
-                  />
-                  <label className="custom-control-label" htmlFor="size-all">
-                    All Size
-                  </label>
-                </div>
-                <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                  <input
-                    type="checkbox"
-                    className="custom-control-input"
-                    id="size-1"
-                  />
-                  <label className="custom-control-label" htmlFor="size-1">
-                    XS
-                  </label>
-                </div>
-                <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                  <input
-                    type="checkbox"
-                    className="custom-control-input"
-                    id="size-2"
-                  />
-                  <label className="custom-control-label" htmlFor="size-2">
-                    S
-                  </label>
-                </div>
-                <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                  <input
-                    type="checkbox"
-                    className="custom-control-input"
-                    id="size-3"
-                  />
-                  <label className="custom-control-label" htmlFor="size-3">
-                    M
-                  </label>
-                </div>
-                <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                  <input
-                    type="checkbox"
-                    className="custom-control-input"
-                    id="size-4"
-                  />
-                  <label className="custom-control-label" htmlFor="size-4">
-                    L
-                  </label>
-                </div>
-                <div className="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                  <input
-                    type="checkbox"
-                    className="custom-control-input"
-                    id="size-5"
-                  />
-                  <label className="custom-control-label" htmlFor="size-5">
-                    XL
-                  </label>
-                </div>
-              </form>
-            </div>
-            {/* Size End */}
           </div>
-          {/* Shop Sidebar End */}
-          {/* Shop Product Start */}
           <div className="col-lg-9 col-md-12">
             <div className="row pb-3">
               <div className="col-12 pb-1">
@@ -285,20 +183,27 @@ function Products() {
                       aria-haspopup="true"
                       aria-expanded="false"
                     >
-                      Sort by
+                      {sortBy}
                     </button>
                     <div
                       className="dropdown-menu dropdown-menu-right"
                       aria-labelledby="triggerId"
                     >
-                      <a className="dropdown-item" href="#">
+                      <a
+                        className="dropdown-item"
+                        onClick={() => {
+                          setSortBy("createDate");
+                        }}
+                      >
                         Latest
                       </a>
-                      <a className="dropdown-item" href="#">
-                        Popularity
-                      </a>
-                      <a className="dropdown-item" href="#">
-                        Best Rating
+                      <a
+                        className="dropdown-item"
+                        onClick={() => {
+                          setSortBy("price");
+                        }}
+                      >
+                        Price
                       </a>
                     </div>
                   </div>
@@ -323,9 +228,9 @@ function Products() {
                     <div className="card-body border-left border-right text-center p-0 pt-4 pb-3">
                       <h6 className="text-truncate mb-3">{product.name}</h6>
                       <div className="d-flex justify-content-center">
-                        <h6>{product.price}</h6>
+                        <h6>{product.price}$</h6>
                         <h6 className="text-muted ml-2">
-                          <del>{product.price}</del>
+                          <del>{product.price + 100}$</del>
                         </h6>
                       </div>
                     </div>
@@ -347,6 +252,12 @@ function Products() {
                   </div>
                 </div>
               ))}
+              {!data && (
+                <div className="flex ml-96 pl-40 my-40 items-center">
+                  <p>Loading</p>
+                  <CircularProgress />
+                </div>
+              )}
               <div className="col-12 pb-1">
                 <nav aria-label="Page navigation">
                   <ul className="pagination justify-content-center mb-3">
@@ -363,7 +274,8 @@ function Products() {
                       </button>
                     </li>
                     {paginationArray.map((index) => (
-                      <li key={index}
+                      <li
+                        key={index}
                         className={`page-item ${
                           index == pageNumber && "active"
                         }`}

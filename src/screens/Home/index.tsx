@@ -38,9 +38,9 @@ const Home = () => {
                 <div className="card-body border-left border-right text-center p-0 pt-4 pb-3">
                   <h6 className="text-truncate mb-3">{product.name}</h6>
                   <div className="d-flex justify-content-center">
-                    <h6>{product.price}</h6>
+                    <h6>{product.price}$</h6>
                     <h6 className="text-muted ml-2">
-                      <del>{product.price}</del>
+                      <del>{product.price+100}$</del>
                     </h6>
                   </div>
                 </div>
