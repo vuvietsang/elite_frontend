@@ -9,7 +9,8 @@ import { useForm } from "react-hook-form";
 function Products() {
   const [pageNumber, setPageNumber] = useState(0);
   const [search, setSearch] = useState<string>("");
-  const [sortBy, setSortBy] = useState<string>("Sort By");
+  const [sortBy, setSortBy] = useState<string>("");
+  const [sortLable, setSortLable] = useState<string>("Sort By");
   const { data, isLoading } = useProducts(pageNumber, 9, search, sortBy);
   const paginationArray: number[] = [];
   const navigate = useNavigate();
@@ -183,7 +184,7 @@ function Products() {
                       aria-haspopup="true"
                       aria-expanded="false"
                     >
-                      {sortBy}
+                      {sortLable}
                     </button>
                     <div
                       className="dropdown-menu dropdown-menu-right"
@@ -193,6 +194,7 @@ function Products() {
                         className="dropdown-item"
                         onClick={() => {
                           setSortBy("createDate");
+                          setSortLable("Latest");
                         }}
                       >
                         Latest
@@ -201,6 +203,7 @@ function Products() {
                         className="dropdown-item"
                         onClick={() => {
                           setSortBy("price");
+                          setSortLable("Price");
                         }}
                       >
                         Price
