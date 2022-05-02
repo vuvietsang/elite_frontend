@@ -1,3 +1,4 @@
+import { Dialog, DialogTitle } from "@mui/material";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
@@ -16,13 +17,35 @@ const ProductDetails = () => {
   const userId = useSelector((state: any) => state.auth.userId);
   const { mutate: addRating, data: ratingData } = useAddRatingtoProduct();
   const [comment, setComment] = useState<string>("");
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
   const handleRating = () => {
     if (isAuth) {
       if (id) addRating({ comment, productId: id, ratingStar, userId });
+    } else {
+      setOpenDialog(true);
     }
   };
   return (
     <div>
+      <Dialog
+        open={openDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <div className="py-10 px-28 flex items-center flex-col space-y-5 ">
+          <p className="text-xl">
+            You have to login before using this function
+          </p>
+          <button
+            onClick={() => {
+              setOpenDialog(false);
+            }}
+            className="p-2 flex bg-gray-300 rounded-sm"
+          >
+            Accept
+          </button>
+        </div>
+      </Dialog>
       <div className="container-fluid bg-secondary mb-2 ">
         <div className="d-flex flex-column align-items-center justify-content-center h-72">
           <div className="mt-16"></div>
