@@ -2,7 +2,7 @@ import { useMutation } from "react-query";
 import { AxiosError } from "axios";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
-import { login  as loginStore} from "../Slice";
+import { login as loginStore } from "../Slice";
 import { login } from "../../../api/authService";
 import { useSnackbar } from "notistack";
 import { LoginDto } from "../../../dto/LoginDto";
@@ -17,12 +17,12 @@ const useLogin = () => {
     {
       onSuccess: (data) => {
         dispatch(loginStore(data));
-        navigate("/");
-        enqueueSnackbar("Login Successfully!",{variant:"success"});
+        enqueueSnackbar("Login Successfully!", { variant: "success" });
       },
-      onError: (error:any) => {
-        enqueueSnackbar(error.response.data.errorMessage,{variant:"error"})}
-      }
+      onError: (error: any) => {
+        enqueueSnackbar(error.response.data.errorMessage, { variant: "error" });
+      },
+    }
   );
 };
 

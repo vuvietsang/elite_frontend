@@ -33,7 +33,6 @@ function Products() {
       setSearch(`price>${leftPrice},price<${rightPrice}`);
     }
   };
-
   return (
     <div>
       {/* Page Header Start */}

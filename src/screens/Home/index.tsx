@@ -7,7 +7,8 @@ import useProducts from "../Products/hooks/useProducts";
 
 const Home = () => {
   const navigate = useNavigate();
-  const { data, isLoading } = useProducts(0, 6, "");
+  const { data, isLoading } = useProducts(0, 6, "", "");
+  const handleAddToCart = () => {};
   return (
     <div>
       <div className="container-fluid mb-5">
@@ -40,7 +41,7 @@ const Home = () => {
                   <div className="d-flex justify-content-center">
                     <h6>{product.price}$</h6>
                     <h6 className="text-muted ml-2">
-                      <del>{product.price+100}$</del>
+                      <del>{product.price + 100}$</del>
                     </h6>
                   </div>
                 </div>
@@ -54,7 +55,12 @@ const Home = () => {
                     <i className="fas fa-eye text-primary mr-1" />
                     View Detail
                   </button>
-                  <a className="btn btn-sm text-dark p-0">
+                  <a
+                    className="btn btn-sm text-dark p-0"
+                    onClick={() => {
+                      handleAddToCart();
+                    }}
+                  >
                     <i className="fas fa-shopping-cart text-primary mr-1" />
                     Add To Cart
                   </a>

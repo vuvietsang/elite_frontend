@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { array, number } from "yup";
+import useAddRatingtoProduct from "./hooks/useAddRatingtoProduct";
 import useProductById from "./hooks/useProductById";
 import useRatingProductById from "./hooks/useRatingsProductById";
 
@@ -9,6 +11,16 @@ const ProductDetails = () => {
   const { data } = useProductById(id);
   const { data: ratings } = useRatingProductById(id, 0, 10);
   const [quantity, setQuantity] = useState<number>(1);
+  const [ratingStar, setRatingStar] = useState<number>(1);
+  const isAuth = useSelector((state: any) => state.auth.isAuth);
+  const userId = useSelector((state: any) => state.auth.userId);
+  const { mutate: addRating, data: ratingData } = useAddRatingtoProduct();
+  const [comment, setComment] = useState<string>("");
+  const handleRating = () => {
+    if (isAuth) {
+      if (id) addRating({ comment, productId: id, ratingStar, userId });
+    }
+  };
   return (
     <div>
       <div className="container-fluid bg-secondary mb-2 ">
@@ -250,12 +262,22 @@ const ProductDetails = () => {
                     </h4>
                     <div className="d-flex my-3">
                       <p className="mb-0 mr-2">Your Rating * :</p>
+                      <select
+                        name="star"
+                        id="star"
+                        className=" rounded-sm mr-1 border-2"
+                        onChange={(evt) => {
+                          setRatingStar(Number(evt.target.value));
+                        }}
+                      >
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                      </select>
                       <div className="text-primary">
-                        <i className="far fa-star" />
-                        <i className="far fa-star" />
-                        <i className="far fa-star" />
-                        <i className="far fa-star" />
-                        <i className="far fa-star" />
+                        <i className="fas fa-star" />
                       </div>
                     </div>
                     <form>
@@ -267,11 +289,16 @@ const ProductDetails = () => {
                           rows={5}
                           className="form-control"
                           defaultValue={""}
+                          onChange={(e) => {
+                            setComment(e.target.value);
+                          }}
                         />
                       </div>
                       <div className="form-group mb-0">
                         <input
-                          type="submit"
+                          onClick={() => {
+                            handleRating();
+                          }}
                           defaultValue="Leave Your Review"
                           className="btn btn-primary px-3"
                         />
