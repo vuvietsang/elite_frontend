@@ -1,4 +1,4 @@
-export interface OrderDetailsDto{
-    productId:number;
-    quantity:number;
+export default interface OrderDetailsDto {
+  productId: number;
+  quantity: number;
 }

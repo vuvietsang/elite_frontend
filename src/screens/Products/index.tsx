@@ -1,10 +1,12 @@
-import { Box, Button, CircularProgress } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { CircularProgress } from "@mui/material";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { ProductDto } from "../../dto/ProductDto";
 import useProducts from "./hooks/useProducts";
-import { useNavigate } from "react-router";
-import { useForm } from "react-hook-form";
+import { increase } from "./Slice/cartSlice";
 
 function Products() {
   const [pageNumber, setPageNumber] = useState(0);
@@ -28,14 +30,32 @@ function Products() {
       const price = value.price;
       const leftPrice: string = price.split("-")[0];
       const rightPrice: string = price.split("-")[1];
-      console.log(leftPrice);
-      console.log(rightPrice);
       setSearch(`price>${leftPrice},price<${rightPrice}`);
     }
   };
+  const dispatch = useDispatch();
+  const handleAddToCart = (product: ProductDto) => {
+    let cart: { product: ProductDto; quantity: number }[] = JSON.parse(
+      localStorage.getItem("cart") || "[]"
+    );
+    if (cart) {
+      var index = cart.findIndex((productTmp) => {
+        return productTmp.product.id === product.id;
+      });
+      if (index >= 0) {
+        cart[index].quantity++;
+      } else {
+        cart.push({
+          product,
+          quantity: 1,
+        });
+      }
+    }
+    localStorage.setItem("cart", JSON.stringify(cart));
+    dispatch(increase(1));
+  };
   return (
     <div>
-      {/* Page Header Start */}
       <div className="bg-secondary">
         <div className="d-flex flex-column align-items-center justify-content-center h-72">
           <div className="mt-16"></div>
@@ -51,13 +71,9 @@ function Products() {
           </div>
         </div>
       </div>
-      {/* Page Header End */}
-      {/* Shop Start */}
       <div className="container-fluid pt-5 ">
         <div className="row px-xl-5">
-          {/* Shop Sidebar Start */}
           <div className="col-lg-3 col-md-12">
-            {/* Price Start */}
             <div className="border-bottom mb-4 pb-4">
               <h5 className="font-weight-semi-bold mb-4">Filter by price</h5>
               <form
@@ -246,7 +262,12 @@ function Products() {
                         <i className="fas fa-eye text-primary mr-1" />
                         View Detail
                       </button>
-                      <a className="btn btn-sm text-dark p-0">
+                      <a
+                        className="btn btn-sm text-dark p-0"
+                        onClick={() => {
+                          handleAddToCart(product);
+                        }}
+                      >
                         <i className="fas fa-shopping-cart text-primary mr-1" />
                         Add To Cart
                       </a>
@@ -255,7 +276,7 @@ function Products() {
                 </div>
               ))}
               {!data && (
-                <div className="flex ml-96 pl-40 my-40 items-center">
+                <div className="flex ml-96 pl-20 my-40 items-center">
                   <p>Loading</p>
                   <CircularProgress />
                 </div>
@@ -311,10 +332,8 @@ function Products() {
               </div>
             </div>
           </div>
-          {/* Shop Product End */}
         </div>
       </div>
-      {/* Shop End */}
     </div>
   );
 }

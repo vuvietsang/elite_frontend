@@ -5,7 +5,7 @@ export interface AuthState {
   token: string;
   userId: string;
   role: string;
-  avatar:string;
+  avatar: string;
 }
 
 const initialState: AuthState = {
@@ -13,7 +13,7 @@ const initialState: AuthState = {
   token: "",
   userId: "",
   role: "",
-  avatar:"",
+  avatar: "",
 };
 
 export const AuthSlice = createSlice({
@@ -32,6 +32,7 @@ export const AuthSlice = createSlice({
       state.token = "";
       state.userId = "";
       state.role = "";
+      state.avatar = "";
     },
   },
 });

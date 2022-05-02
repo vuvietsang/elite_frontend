@@ -1,14 +1,36 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import Carousel from "../../components/Carousel";
 import Categories from "../../components/Categories";
 import { ProductDto } from "../../dto/ProductDto";
 import useProducts from "../Products/hooks/useProducts";
+import { increase } from "../Products/Slice/cartSlice";
 
 const Home = () => {
   const navigate = useNavigate();
   const { data, isLoading } = useProducts(0, 6, "", "");
-  const handleAddToCart = () => {};
+  const dispatch = useDispatch();
+  const handleAddToCart = (product: ProductDto) => {
+    let cart: { product: ProductDto; quantity: number }[] = JSON.parse(
+      localStorage.getItem("cart") || "[]"
+    );
+    if (cart) {
+      var index = cart.findIndex((productTmp) => {
+        return productTmp.product.id === product.id;
+      });
+      if (index >= 0) {
+        cart[index].quantity++;
+      } else {
+        cart.push({
+          product,
+          quantity: 1,
+        });
+      }
+    }
+    localStorage.setItem("cart", JSON.stringify(cart));
+    dispatch(increase(1));
+  };
   return (
     <div>
       <div className="container-fluid mb-5">
@@ -58,7 +80,7 @@ const Home = () => {
                   <a
                     className="btn btn-sm text-dark p-0"
                     onClick={() => {
-                      handleAddToCart();
+                      handleAddToCart(product);
                     }}
                   >
                     <i className="fas fa-shopping-cart text-primary mr-1" />
