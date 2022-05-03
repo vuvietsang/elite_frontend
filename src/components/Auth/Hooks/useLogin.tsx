@@ -16,6 +16,7 @@ const useLogin = () => {
     {
       onSuccess: (data) => {
         dispatch(loginStore(data));
+        if (data.roleName == "ADMIN") navigate("/admin");
         enqueueSnackbar("Login Successfully!", { variant: "success" });
       },
       onError: (error: any) => {

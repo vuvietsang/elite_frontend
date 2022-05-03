@@ -130,7 +130,10 @@ const Checkout = () => {
               <div className="card-body">
                 <h5 className="font-weight-medium mb-3">Products</h5>
                 {cart.map((item) => (
-                  <div className="d-flex justify-content-between">
+                  <div
+                    key={item.product.id}
+                    className="d-flex justify-content-between"
+                  >
                     <p>{item.product.name}</p>
                     <p>${item.product.price * item.quantity}</p>
                   </div>
