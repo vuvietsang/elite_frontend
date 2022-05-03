@@ -11,21 +11,34 @@ import Checkout from "./screens/Checkout";
 import ProductDetails from "./screens/ProductDetails";
 import Products from "./screens/Products";
 import Admin from "./screens/Admin";
+import { useSelector } from "react-redux";
 
 function App() {
+  const isAuth = useSelector((state: any) => state.auth.isAuth);
+  const role = useSelector((state: any) => state.auth.role);
   return (
     <div className="App">
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/details/:id" element={<ProductDetails />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/admin" element={<Admin />} />
-      </Routes>
-      <Footer />
+      {!isAuth || role == "USER" ? (
+        <div>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/details/:id" element={<ProductDetails />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/admin" element={<Admin />} />
+          </Routes>
+          <Footer />
+        </div>
+      ) : (
+        <div>
+          <Routes>
+            <Route path="/admin" element={<Admin />} />
+          </Routes>
+        </div>
+      )}
     </div>
   );
 }
