@@ -1,7 +1,8 @@
-import { Dialog, DialogTitle, List } from "@mui/material";
+import { Dialog } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { logoutCart } from "../../screens/Products/Slice/cartSlice";
 import Login from "../Auth/Login";
 import Register from "../Auth/Register";
 import { logout } from "../Auth/Slice";
@@ -85,7 +86,9 @@ const Header = () => {
               <button
                 className="hover:bg-gray-400 py-1 px-3 rounded-md border-2"
                 onClick={() => {
+                  localStorage.clear();
                   dispatch(logout());
+                  dispatch(logoutCart());
                   nav("/");
                 }}
               >

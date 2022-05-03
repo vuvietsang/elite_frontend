@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import Header from "../../components/Header";
 import { ProductDto } from "../../dto/ProductDto";
 import { decrease, increase, update } from "../Products/Slice/cartSlice";
@@ -26,6 +27,8 @@ const Cart = () => {
       dispatch(increase(1));
     }
   };
+
+  const nav = useNavigate();
 
   const handleMinusQuantity = async (product: ProductDto) => {
     var index = cart.findIndex((productTmp) => {
@@ -183,7 +186,9 @@ const Cart = () => {
                   <h5 className="font-weight-bold">${subTotal}</h5>
                 </div>
                 <button
-                  onClick={() => {}}
+                  onClick={() => {
+                    nav("/checkout");
+                  }}
                   className="btn btn-block btn-primary my-3 py-3"
                 >
                   Proceed To Checkout

@@ -22,9 +22,12 @@ const cartSlice = createSlice({
     increaseMany(state, action) {
       return state + Number(action.payload);
     },
+    logoutCart(state) {
+      return 0;
+    },
   },
 });
 
 const { actions, reducer } = cartSlice;
-export const { increase, decrease, update, increaseMany } = actions;
+export const { increase, decrease, update, increaseMany, logoutCart } = actions;
 export default cartSlice.reducer;
