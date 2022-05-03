@@ -1,15 +1,63 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header";
 import { ProductDto } from "../../dto/ProductDto";
+import { decrease, increase, update } from "../Products/Slice/cartSlice";
 
 const Cart = () => {
-  let cart: { product: ProductDto; quantity: number }[] = JSON.parse(
-    localStorage.getItem("cart") || "[]"
-  );
+  let cartLocalStorage: { product: ProductDto; quantity: number }[] =
+    JSON.parse(localStorage.getItem("cart") || "[]");
+  const [cart, setCart] = useState(cartLocalStorage);
   var subTotal = 0;
   cart.forEach((item) => {
     subTotal = subTotal + item.product.price * item.quantity;
   });
+  const dispatch = useDispatch();
+  const handlePlusQuantity = async (product: ProductDto) => {
+    var index = cart.findIndex((productTmp) => {
+      return productTmp.product.id === product.id;
+    });
+    if (index >= 0) {
+      const newProduct = { ...cart[index], quantity: cart[index].quantity + 1 };
+      const tmpCart = [...cart];
+      tmpCart[index] = newProduct;
+      await setCart(tmpCart);
+      localStorage.setItem("cart", JSON.stringify(tmpCart));
+      dispatch(increase(1));
+    }
+  };
+
+  const handleMinusQuantity = async (product: ProductDto) => {
+    var index = cart.findIndex((productTmp) => {
+      return productTmp.product.id === product.id;
+    });
+    if (cart[index].quantity > 1) {
+      if (index >= 0) {
+        const newProduct = {
+          ...cart[index],
+          quantity: cart[index].quantity - 1,
+        };
+        const tmpCart = [...cart];
+        tmpCart[index] = newProduct;
+        await setCart(tmpCart);
+        localStorage.setItem("cart", JSON.stringify(tmpCart));
+        dispatch(decrease(1));
+      }
+    }
+  };
+  const cartCounter = useSelector((state: any) => state.cart);
+
+  const handleRemoveItem = (product: ProductDto) => {
+    var index = cart.findIndex((productTmp) => {
+      return productTmp.product.id === product.id;
+    });
+    const tmpCart = [...cart];
+    const itemQuantity = tmpCart.at(index)?.quantity;
+    tmpCart.splice(index, 1);
+    setCart(tmpCart);
+    if (itemQuantity) dispatch(update(cartCounter - itemQuantity));
+    localStorage.setItem("cart", JSON.stringify(tmpCart));
+  };
   return (
     <div>
       {/* Page Header Start */}
@@ -58,17 +106,27 @@ const Cart = () => {
                         style={{ width: "100px" }}
                       >
                         <div className="input-group-btn">
-                          <button className="btn btn-sm btn-primary btn-minus">
+                          <button
+                            onClick={() => {
+                              handleMinusQuantity(item.product);
+                            }}
+                            className="btn btn-sm btn-primary btn-minus"
+                          >
                             <i className="fa fa-minus" />
                           </button>
                         </div>
                         <input
                           type="text"
                           className="form-control form-control-sm bg-secondary text-center"
-                          defaultValue={item.quantity}
+                          value={item.quantity}
                         />
                         <div className="input-group-btn">
-                          <button className="btn btn-sm btn-primary btn-plus">
+                          <button
+                            onClick={() => {
+                              handlePlusQuantity(item.product);
+                            }}
+                            className="btn btn-sm btn-primary btn-plus"
+                          >
                             <i className="fa fa-plus" />
                           </button>
                         </div>
@@ -78,7 +136,12 @@ const Cart = () => {
                       ${item.product.price * item.quantity}
                     </td>
                     <td className="align-middle">
-                      <button className="btn btn-sm btn-primary">
+                      <button
+                        onClick={() => {
+                          handleRemoveItem(item.product);
+                        }}
+                        className="btn btn-sm btn-primary"
+                      >
                         <i className="fa fa-times" />
                       </button>
                     </td>
@@ -117,9 +180,12 @@ const Cart = () => {
               <div className="card-footer border-secondary bg-transparent">
                 <div className="d-flex justify-content-between mt-2">
                   <h5 className="font-weight-bold">Total</h5>
-                  <h5 className="font-weight-bold">$160</h5>
+                  <h5 className="font-weight-bold">${subTotal}</h5>
                 </div>
-                <button className="btn btn-block btn-primary my-3 py-3">
+                <button
+                  onClick={() => {}}
+                  className="btn btn-block btn-primary my-3 py-3"
+                >
                   Proceed To Checkout
                 </button>
               </div>

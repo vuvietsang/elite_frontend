@@ -1,8 +1,10 @@
 import { Dialog, DialogTitle } from "@mui/material";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { array, number } from "yup";
+import { ProductDto } from "../../dto/ProductDto";
+import { increase, increaseMany } from "../Products/Slice/cartSlice";
 import useAddRatingtoProduct from "./hooks/useAddRatingtoProduct";
 import useProductById from "./hooks/useProductById";
 import useRatingProductById from "./hooks/useRatingsProductById";
@@ -23,6 +25,37 @@ const ProductDetails = () => {
       if (id) addRating({ comment, productId: id, ratingStar, userId });
     } else {
       setOpenDialog(true);
+    }
+  };
+  let cartLocalStorage: {
+    product: ProductDto | undefined;
+    quantity: number;
+  }[] = JSON.parse(localStorage.getItem("cart") || "[]");
+  const [cart, setCart] = useState(cartLocalStorage);
+
+  const dispatch = useDispatch();
+
+  const handleAddToCart = () => {
+    var index = cart.findIndex((productTmp) => {
+      return productTmp?.product?.id === data?.id;
+    });
+    if (index >= 0) {
+      const newProduct = {
+        ...cart[index],
+        quantity: cart[index].quantity + quantity,
+      };
+      const tmpCart = [...cart];
+      tmpCart[index] = newProduct;
+      setCart(tmpCart);
+      localStorage.setItem("cart", JSON.stringify(tmpCart));
+      dispatch(increaseMany(quantity));
+    } else {
+      cart.push({
+        product: data,
+        quantity: quantity,
+      });
+      localStorage.setItem("cart", JSON.stringify(cart));
+      dispatch(increaseMany(quantity));
     }
   };
   return (
@@ -237,7 +270,10 @@ const ProductDetails = () => {
                   </button>
                 </div>
               </div>
-              <button className="btn btn-primary px-3">
+              <button
+                onClick={handleAddToCart}
+                className="btn btn-primary px-3"
+              >
                 <i className="fa fa-shopping-cart mr-1" /> Add To Cart
               </button>
             </div>
