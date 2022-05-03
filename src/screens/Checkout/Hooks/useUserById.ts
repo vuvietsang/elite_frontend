@@ -1,5 +1,4 @@
 import { useQuery } from "react-query";
-import { getAllProduct, getProductById } from "../../../api/productService";
 import { getUserById } from "../../../api/userService";
 
 const useUserById = (id: string) => {
