@@ -1,14 +1,12 @@
-import React, { Component, useState } from 'react'
-import { Route } from 'react-router-dom';
+import React, { Component, useState } from "react";
+import { Route } from "react-router-dom";
 
-
-interface props{
-    component:Component;
+interface props {
+  component: Component;
 }
-const ProtectedRoute=({component, ...rest}:props) =>{
-    const [isAuth,setIsAuth] = useState(false);
-  return (<Route {...rest}  />
-  )
-}
+const ProtectedRoute = ({ component, ...rest }: props) => {
+  const [isAuth, setIsAuth] = useState(false);
+  return <Route {...rest} />;
+};
 
-export default ProtectedRoute
+export default ProtectedRoute;

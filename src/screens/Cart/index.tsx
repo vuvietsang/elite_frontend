@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import Header from "../../components/Header";
 import { ProductDto } from "../../dto/ProductDto";
 import { decrease, increase, update } from "../Products/Slice/cartSlice";
 

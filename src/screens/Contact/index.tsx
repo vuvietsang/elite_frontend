@@ -6,7 +6,7 @@ const Contact = () => {
     <div>
       {/* Page Header Start */}
       <div className="container-fluid bg-secondary mb-3">
-      <div className="d-flex flex-column align-items-center justify-content-center h-72">
+        <div className="d-flex flex-column align-items-center justify-content-center h-72">
           <div className="mt-16"></div>
           <h1 className="font-weight-semi-bold text-uppercase mb-3">
             Contact Us

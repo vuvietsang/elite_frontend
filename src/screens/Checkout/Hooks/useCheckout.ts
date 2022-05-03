@@ -1,5 +1,5 @@
 import { useSnackbar } from "notistack";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation } from "react-query";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { checkout } from "../../../api/orderService";

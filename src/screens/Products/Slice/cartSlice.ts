@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { useReducer } from "react";
 import { useSelector } from "react-redux";
 
 var initalCounter = 0;

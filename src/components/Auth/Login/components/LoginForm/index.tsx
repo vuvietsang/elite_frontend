@@ -1,19 +1,18 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Button } from "@mui/material";
+import React from "react";
+import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import { Button, Dialog } from "@mui/material";
+import { LoginDto } from "../../../../../dto/LoginDto";
 import InputField from "../../../../FormInputs/InputField";
 import PasswordField from "../../../../FormInputs/PasswordField";
-import Register from "../../../Register";
-import { LoginDto } from "../../../../../dto/LoginDto";
 interface props {
   onSubmitt: (values: any) => Promise<void>;
   onCancel: () => void;
-  onOpenRegister:()=>void;
+  onOpenRegister: () => void;
 }
 const LoginForm = (props: props) => {
-  const { onCancel, onSubmitt,onOpenRegister } = props;
+  const { onCancel, onSubmitt, onOpenRegister } = props;
   const schema = yup.object().shape({
     username: yup.string().required("Please enter username"),
     password: yup.string().required("Password can not be empty"),
@@ -57,11 +56,7 @@ const LoginForm = (props: props) => {
         </div>
         <div className="flex flex-row items-center space-x-2 mt-3">
           <p className="pb-1">You don't have an account?</p>
-          <Button
-            variant="text"
-            className="left-0"
-            onClick={onOpenRegister}
-          >
+          <Button variant="text" className="left-0" onClick={onOpenRegister}>
             Register
           </Button>
         </div>

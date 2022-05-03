@@ -1,9 +1,13 @@
 import { useQuery } from "react-query";
-import { getAllProduct, getProductById, getRatingsProductById } from "../../../api/productService";
+import { getRatingsProductById } from "../../../api/productService";
 
-const useRatingProductById = (id:string|undefined,pageNumber:number,pageSize:number) => {
+const useRatingProductById = (
+  id: string | undefined,
+  pageNumber: number,
+  pageSize: number
+) => {
   return useQuery("useRatingProductById", async () => {
-    return getRatingsProductById(id,pageNumber,pageSize);
+    return getRatingsProductById(id, pageNumber, pageSize);
   });
 };
 

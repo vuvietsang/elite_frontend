@@ -1,10 +1,9 @@
-import { Dialog, DialogTitle } from "@mui/material";
+import { Dialog } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { array, number } from "yup";
 import { ProductDto } from "../../dto/ProductDto";
-import { increase, increaseMany } from "../Products/Slice/cartSlice";
+import { increaseMany } from "../Products/Slice/cartSlice";
 import useAddRatingtoProduct from "./hooks/useAddRatingtoProduct";
 import useProductById from "./hooks/useProductById";
 import useRatingProductById from "./hooks/useRatingsProductById";

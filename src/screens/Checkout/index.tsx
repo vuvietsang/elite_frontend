@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import OrderDetailsDto from "../../dto/OrderDetailsDto";
 import { ProductDto } from "../../dto/ProductDto";
-import { UserDto } from "../../dto/UserDto";
 import useCheckout from "./Hooks/useCheckout";
 import useUserById from "./Hooks/useUserById";
 
